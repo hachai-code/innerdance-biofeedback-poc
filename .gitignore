@@ -1,0 +1,76 @@
+# --- Participant health data — never commit ---
+data/**/*.csv
+data/**/*.json
+data/**/*.docx
+data/**/*.xlsx
+# Keep only the README
+!data/README.md
+
+# --- Audio files (large + potentially copyrighted) ---
+sound/**/*.mp3
+sound/**/*.m4a
+sound/**/*.wav
+sound/**/*.aiff
+*.mp3
+*.m4a
+*.wav
+
+# --- Raw source documents ---
+raw/*.pdf
+raw/*.docx
+raw/*.doc
+
+# --- Generated outputs ---
+outputs/figures/*.png
+outputs/figures/*.jpg
+outputs/figures/*.svg
+# HTML reports are PRIMARY OUTPUT — track them
+# outputs/*.html
+outputs/__pycache__/
+
+# --- Python ---
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# --- MLflow ---
+mlruns/
+mlartifacts/
+
+# --- Environment variables ---
+.env
+.env.local
+.env.*.local
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- OS ---
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# --- Supabase local ---
+.supabase/
+supabase/.branches/
+supabase/.temp/
