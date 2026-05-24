@@ -3,17 +3,18 @@ data/**/*.csv
 data/**/*.json
 data/**/*.docx
 data/**/*.xlsx
-# Keep only the README
+# Keep only the README and the pipeline sample file
 !data/README.md
+!data/sample/**
 
-# --- Audio files (large + potentially copyrighted) ---
-sound/**/*.mp3
-sound/**/*.m4a
-sound/**/*.wav
-sound/**/*.aiff
+# --- Audio files (large — use Git LFS for large repos: git lfs track "*.mp3") ---
+# sound/ folder files ARE tracked for the pipeline sample set
+# *.mp3 at root level excluded; sound subfolder files are allowed
 *.mp3
 *.m4a
 *.wav
+!sound/**/*.mp3
+!sound/**/*.m4a
 
 # --- Raw source documents ---
 raw/*.pdf

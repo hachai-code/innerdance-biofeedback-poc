@@ -10,22 +10,26 @@ The CSV files contain individual health data (heart rate variability recordings)
 
 ---
 
-## Folder layout (local only)
+## Folder layout
 
 ```
 data/
 ├── README.md                                  ← this file (committed)
-├── 14.12.25, 12_50 Vlad-1.csv                ← Polar H10 ECG export, Vlad, partial session
-└── baseline + stress test + 5 stages RR recordnings/
-    ├── 10.12.25, 15_47-1 Lorenzo first 5 stages.csv
-    ├── 13.12.25, 19_30 cezar 12 stages.csv
-    ├── 14.12.25, 12_50 Vlad 12 stages.csv
-    ├── 19.12.25, 19_17 Andrei last stages.csv
-    ├── 26.12.2025, 18_29 Claudia 12 stages.csv
-    ├── 26.12.25, 18_29 Giacomo 12 stages.csv
-    ├── Timestamps Giacomo and Claudia session.docx
-    └── Timestamps Vlad.docx
+├── sample/                                    ← pipeline test files (committed)
+│   ├── README.md
+│   ├── P1_2025-12-14_session01.csv            ← P1 full session (Polar H10 ECG)
+│   └── P1_2025-12-14_timestamps.json          ← P1 stage timestamps + HRV results
+└── baseline + stress test + 5 stages RR recordnings/   ← local only, gitignored
+    ├── P2_2025-12-26_session01.csv            (renamed from Claudia original)
+    ├── P3_2025-12-26_session01.csv            (renamed from Giacomo original)
+    ├── P4_2025-12-13_session01.csv            (renamed from Cezar original)
+    ├── P5_2025-12-10_session01.csv            (renamed from Lorenzo original)
+    ├── P6_2025-12-19_session01.csv            (renamed from Andrei original)
+    ├── Timestamps P2 and P3 session.docx
+    └── Timestamps P1.docx
 ```
+
+Note: the original filenames in the local data folder have not been renamed on disk — the table above shows the target pseudonymised naming convention to use when re-organising.
 
 ---
 
@@ -105,9 +109,9 @@ When session audio and R-R data are both recorded:
 
 | Participant ID | Date | Format | Notes |
 |---|---|---|---|
-| Vlad | 14.12.2025 | polar_ecg | Partial + full session. Timestamps in `.docx`. |
-| Lorenzo | 10.12.2025 | polar_ecg | First 5 stages only |
-| Cezar | 13.12.2025 | polar_ecg | 12 stages |
-| Andrei | 19.12.2025 | polar_ecg | Last stages only |
-| Claudia | 26.12.2025 | polar_ecg | 12 stages. Timestamps in `.docx`. |
-| Giacomo | 26.12.2025 | polar_ecg | 12 stages. Timestamps in `.docx`. |
+| P1 | 14.12.2025 | polar_ecg | Full 12-stage session. Timestamps in `sample/P1_2025-12-14_timestamps.json`. |
+| P2 | 26.12.2025 | polar_ecg | 12 stages. Timestamps available (converted from `.docx`). |
+| P3 | 26.12.2025 | polar_ecg | 12 stages. Timestamps available (converted from `.docx`). |
+| P4 | 13.12.2025 | polar_ecg | 12 stages — no stage timestamps. |
+| P5 | 10.12.2025 | polar_ecg | First 5 stages only. |
+| P6 | 19.12.2025 | polar_ecg | Last stages only (recording started late). |

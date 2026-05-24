@@ -54,7 +54,7 @@ OUTPUT_DIR  = os.path.join(PROJECT_DIR, "outputs", "figures")
 SESSIONS = [
     {
         "id":       "P1_20251214",
-        "rr_file":  os.path.join(PROJECT_DIR, "data", "14.12.25, 12_50 Vlad-1.csv"),
+        "rr_file":  os.path.join(PROJECT_DIR, "data", "sample", "P1_2025-12-14_session01.csv"),
         # Polar ECG export format: nanosecond timestamp + rr column (NaN on non-peak rows)
         "format":   "polar_ecg",
         "segments": {
@@ -136,7 +136,7 @@ def load_rr_polar_ecg(rr_file):
     Load Polar ECG/raw export (H10 with ECG enabled).
     Columns: time [ns], ecg, hr, rr [ms], marker
     Only rows where rr is not NaN are R-peak detections.
-    Applies a two-pass artifact filter matching source/1_analyze_vlad_rr.py.
+    Applies a two-pass artifact filter matching the original analysis script.
     Returns (times_sec, rr_ms) as numpy arrays, time relative to session start.
     """
     df = pd.read_csv(rr_file)
@@ -697,7 +697,7 @@ def run_multi_session(sessions: list[tuple]):
 
 def segments_to_df(segments: dict, session_end_sec: float) -> pd.DataFrame:
     """
-    Convert the segment dict used in source/1_analyze_vlad_rr.py into the DataFrame
+    Convert the segment dict into the DataFrame
     format expected by run_analysis().
     segments: {label: (start_sec, end_sec)}
     """

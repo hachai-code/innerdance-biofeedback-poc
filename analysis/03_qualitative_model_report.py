@@ -32,7 +32,7 @@ OUTPUT_HTML = os.path.join(PROJECT_DIR, "outputs", "innerdance_model_report_v2.h
 
 PARTICIPANTS = {
     "P1": {
-        "file": os.path.join(PROJECT_DIR, "data", "14.12.25, 12_50 Vlad-1.csv"),
+        "file": os.path.join(PROJECT_DIR, "data", "sample", "P1_2025-12-14_session01.csv"),
         "col_time": "time", "col_rr": "rr",
         "age": 38, "profile": "Athlete, very fit",
         "smoker": False, "mindfulness": False, "color": "#4e79a7",
@@ -148,17 +148,18 @@ STAGE_TRACKS = [
 ]
 
 # ── STAGE TIMESTAMPS FOR TIMED PARTICIPANTS ───────────────────────────────────
-# Vlad: pre-session baseline available; stages relative to session start
+# P1: pre-session baseline available; stages relative to session start
+#     Full timestamp details: data/sample/P1_2025-12-14_timestamps.json
 # P2/P3: recording starts just before Stage 1 (no pre-session baseline)
 
-VLAD_BASELINE   = (0, 420)    # 7-min resting baseline before any stress protocol
-# Pre-session segments for Vlad (stress protocol before innerdance)
-VLAD_PRESESSION = {
+P1_BASELINE   = (0, 420)    # 7-min resting baseline before any stress protocol
+# Pre-session segments for P1 (stress protocol before innerdance)
+P1_PRESESSION = {
     "baseline":  (0,   420),   # 12:50–12:57  resting + light activity
     "papers":    (420, 600),   # 12:57–13:00  2-min research paper reading (cognitive load)
     "questions": (660, 900),   # 13:01–13:05  answering questions (stress induction)
 }
-VLAD_SEGMENTS   = {
+P1_SEGMENTS   = {
     "stage_1":      (960,  1260),
     "stage_2":      (1260, 1500),
     "stage_3":      (1500, 1740),  # 13:15–13:19 — dedicated Stage 3 track (03.01.mp3)
@@ -195,7 +196,7 @@ GIACOMO_SEGMENTS = {
 }
 
 TIMED_SEGMENTS = {
-    "P1": VLAD_SEGMENTS,
+    "P1": P1_SEGMENTS,
     "P2": CLAUDIA_SEGMENTS,
     "P3": GIACOMO_SEGMENTS,
 }
@@ -635,7 +636,7 @@ def run():
 
         # P1: compute baseline reference
         if name == "P1":
-            baseline_m = metrics_in_window(t, rr, *VLAD_BASELINE)
+            baseline_m = metrics_in_window(t, rr, *P1_BASELINE)
             baseline_rmssd = baseline_m["rmssd"]
         else:
             # Use Stage 1 as reference for P2/P3 (no pre-session baseline)
@@ -657,12 +658,12 @@ def run():
 
     # ── 4b. P1 pre-session HRV (baseline / papers / questions) ───────────
     print("\nP1 pre-session HRV:")
-    vlad_presession_hrv = {}
+    p1_presession_hrv = {}
     if rr_data.get("P1") is not None:
         t, rr = rr_data["P1"]
-        for seg_label, (t0, t1) in VLAD_PRESESSION.items():
+        for seg_label, (t0, t1) in P1_PRESESSION.items():
             m = metrics_in_window(t, rr, t0, t1)
-            vlad_presession_hrv[seg_label] = m
+            p1_presession_hrv[seg_label] = m
             print(f"  P1 {seg_label}: RMSSD={m['rmssd']:.1f}ms, "
                   f"SD2={m['sd2']:.1f}, SD1/SD2={m['sd1_sd2']:.3f}, "
                   f"DFAα1={m['dfa_a1']:.3f}, HR={m['mean_hr']:.1f}")
@@ -715,7 +716,7 @@ def run():
         rows.append(row)
 
     model_df = pd.DataFrame(rows)
-    return model_df, audio_df, audio_features, stage_hrv, session_stats, thresholds, cats, vlad_presession_hrv
+    return model_df, audio_df, audio_features, stage_hrv, session_stats, thresholds, cats, p1_presession_hrv
 
 
 # ── CHART GENERATION ──────────────────────────────────────────────────────────
@@ -967,7 +968,7 @@ def hrv_arrow(val, ref, metric):
 
 
 def build_html(model_df, audio_df, audio_features, stage_hrv,
-               session_stats, thresholds, cats, vlad_presession_hrv=None):
+               session_stats, thresholds, cats, p1_presession_hrv=None):
     """Generate the full self-contained HTML report."""
 
     # Build Plotly charts
@@ -1187,14 +1188,14 @@ def build_html(model_df, audio_df, audio_features, stage_hrv,
 
     # ── PRE-SESSION HRV SECTION (P1 only) ──────────────────────────────
     presession_html = ""
-    if vlad_presession_hrv:
+    if p1_presession_hrv:
         def _fmt(v, fmt): return ("—" if np.isnan(v) else f"{v:{fmt}}")
         seg_labels = {"baseline": ("Baseline Rest", "7 min seated rest before session"),
                       "papers":   ("Reading Papers", "~3 min reading research papers"),
                       "questions": ("Answering Questions", "~4 min answering questionnaire")}
         rows_ps = ""
         for seg, (t_label, t_desc) in seg_labels.items():
-            m = vlad_presession_hrv.get(seg, {})
+            m = p1_presession_hrv.get(seg, {})
             if not m:
                 continue
             rmssd  = m.get("rmssd",   float("nan"))
@@ -1258,6 +1259,9 @@ def build_html(model_df, audio_df, audio_features, stage_hrv,
     </div>
   </section>"""
 
+    import datetime
+    generated_at = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+
     # ── ASSEMBLE HTML ─────────────────────────────────────────────────────
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -1283,6 +1287,16 @@ def build_html(model_df, audio_df, audio_features, stage_hrv,
   </style>
 </head>
 <body>
+
+  <!-- AI DISCLAIMER BANNER -->
+  <div style="background:#1a0a00;border-bottom:2px solid #e67e22;padding:12px 24px;font-size:13px;color:#f0c080;position:sticky;top:0;z-index:1000">
+    <strong>⚠ AI-Generated Report — Not Human-Reviewed.</strong>
+    This report was produced automatically by an analysis pipeline (Claude Code + Python).
+    Findings are exploratory, based on N=6 participants (Dec 2025 cohort), and have <strong>not been validated
+    by a researcher or clinician</strong>. Do not cite or act on these results without independent review.
+    Generated: {generated_at}
+  </div>
+
 <div class="container-fluid" style="max-width:1400px;margin:0 auto;padding:0 20px">
 
   <!-- HERO -->
@@ -2331,10 +2345,10 @@ def build_html(model_df, audio_df, audio_features, stage_hrv,
 # ── ENTRY POINT ───────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    model_df, audio_df, audio_features, stage_hrv, session_stats, thresholds, cats, vlad_presession_hrv = run()
+    model_df, audio_df, audio_features, stage_hrv, session_stats, thresholds, cats, p1_presession_hrv = run()
     print("\nBuilding HTML report…")
     html = build_html(model_df, audio_df, audio_features, stage_hrv,
-                      session_stats, thresholds, cats, vlad_presession_hrv)
+                      session_stats, thresholds, cats, p1_presession_hrv)
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"\n✅ Report saved: {OUTPUT_HTML}")

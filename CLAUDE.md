@@ -10,7 +10,7 @@ A research proof-of-concept that uses HRV (heart rate variability) data from a P
 
 **Innerdance** is a facilitated or self-administered sound practice that co-stimulates the sympathetic (SNS) and parasympathetic (PNS) nervous systems in sequence — it is a training for **autonomic flexibility / stress resilience**, not just relaxation.
 
-**Current state:** 6 participants have completed sessions (Dec 2025). One participant (Vlad, 14.12.2025) has been analysed. The data pipeline and analysis scripts are working. The system architecture has been designed; implementation of the V1 web platform has not started.
+**Current state:** 6 participants have completed sessions (Dec 2025). One participant (P1, 14.12.2025) has been analysed. The data pipeline and analysis scripts are working. The system architecture has been designed; implementation of the V1 web platform has not started.
 
 ---
 
@@ -48,7 +48,7 @@ innerdance-biofeedback-poc/
 │   ├── hrv_processor.py             ← Pre/post + in-session HRV windows → Supabase
 │   └── acoustic_processor.py        ← Acoustic feature extraction → Supabase
 │
-├── app/                             ← Streamlit upload app (Phase 0)
+├── app/                             ← React participant app (Phase 1 — not yet built)
 │   ├── README.md
 │   └── upload_app.py                ← Participant upload form
 │
@@ -64,9 +64,9 @@ innerdance-biofeedback-poc/
 
 ## Key technical decisions (do not change without discussion)
 
-### Platform: Supabase + Streamlit + Metabase
+### Platform: Supabase + React + Metabase
 - **Supabase** (managed Postgres): storage for RR CSV files, session metadata, processed features. Auto REST API via PostgREST. Non-experts use Supabase Studio to browse/query data.
-- **Streamlit Community Cloud**: participant upload form. Push to GitHub → auto-deploys.
+- **React app** (`app/`): participant-facing UI — playlist playback, `playlist_start_utc` logging, self-report form, R-R CSV upload. Owned by the frontend developer. Deploys to Vercel/Netlify. See ADR 3 in `docs/architecture_decision_records.md`.
 - **Metabase**: non-expert dashboards connecting directly to Supabase Postgres.
 - See `docs/architecture.md` for the full V1 diagram.
 
@@ -157,17 +157,16 @@ Stage 4 dip → Stage 10 peak is the **resilience arc** — the primary pattern 
 
 ## Participants (current data)
 
-| Participant | Date | File | Sessions analysed |
+| Participant | Date | Sample file | Sessions analysed |
 |---|---|---|---|
-| Vlad | 14.12.2025 | `data/14.12.25...` | YES — see `RESEARCH_JOURNAL.md` |
-| Lorenzo | 10.12.2025 | `data/baseline.../Lorenzo...` | No |
-| Cezar | 13.12.2025 | `data/baseline.../Cezar...` | No |
-| Vlad (12 stages) | 14.12.2025 | `data/baseline.../Vlad 12 stages...` | No |
-| Andrei | 19.12.2025 | `data/baseline.../Andrei...` | No |
-| Claudia | 26.12.2025 | `data/baseline.../Claudia...` | No |
-| Giacomo | 26.12.2025 | `data/baseline.../Giacomo...` | No |
+| P1 | 14.12.2025 | `data/sample/P1_2025-12-14_session01.csv` | YES — see `RESEARCH_JOURNAL.md` |
+| P2 | 26.12.2025 | *(not committed — health data)* | Timestamps available |
+| P3 | 26.12.2025 | *(not committed — health data)* | Timestamps available |
+| P4 | 13.12.2025 | *(not committed — health data)* | No stage timestamps |
+| P5 | 10.12.2025 | *(not committed — health data)* | First 5 stages only |
+| P6 | 19.12.2025 | *(not committed — health data)* | Last stages only |
 
-Timestamp reference files for Vlad, Giacomo, and Claudia are in `data/baseline.../` as `.docx` files.
+Timestamps for P1 are in `data/sample/P1_2025-12-14_timestamps.json`. Timestamp reference documents for P2 and P3 are in the original data folder as `.docx` files (not committed).
 
 ---
 

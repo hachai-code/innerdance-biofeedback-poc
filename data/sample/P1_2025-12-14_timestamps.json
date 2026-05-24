@@ -1,0 +1,59 @@
+{
+  "participant_id": "P1",
+  "session_date": "2025-12-14",
+  "session_type": "innerdance",
+  "polar_format": "polar_ecg",
+  "rr_file": "data/sample/P1_2025-12-14_session01.csv",
+  "start_time_local": "12:50",
+  "note": "All times are seconds from the start of the Polar recording (not audio start). No sync offset recorded for this session.",
+
+  "pre_session": {
+    "note": "Stress protocol administered before innerdance to test HRV reactivity.",
+    "baseline":   [0,   420],
+    "papers":     [420, 600],
+    "questions":  [660, 900]
+  },
+
+  "pre_session_labels": {
+    "baseline":   "12:50–12:57 — resting baseline, light activity",
+    "papers":     "12:57–13:00 — research paper reading (cognitive load induction)",
+    "questions":  "13:01–13:05 — answering questions (stress induction)"
+  },
+
+  "stages": {
+    "stage_1":      [960,  1260],
+    "stage_2":      [1260, 1500],
+    "stage_3":      [1500, 1740],
+    "stage_4":      [1740, 2040],
+    "stage_5":      [2040, 2280],
+    "stages_6_7":   [2280, 2700],
+    "stages_8_9":   [2700, 3000],
+    "stage_10":     [3000, 3240],
+    "stages_11_12": [3240, 3480]
+  },
+
+  "stage_labels": {
+    "stage_1":      "13:06–13:11 — Safety / Befriedigung",
+    "stage_2":      "13:11–13:15 — Dissatisfaction / Unzufriedenheit",
+    "stage_3":      "13:15–13:19 — The Threshold / Die Schwelle (dedicated 03.01.mp3 track — P1 only)",
+    "stage_4":      "13:19–13:24 — Purgation-Release / Freisetzung — SNS activation peak (DFA α1 minimum)",
+    "stage_5":      "13:24–13:28 — Disintegration / Desintegration",
+    "stages_6_7":   "13:28–13:35 — Awakening+Illumination / Erwachen+Erleuchtung",
+    "stages_8_9":   "13:35–13:40 — Strength-Failure / Wahl+Verstärkung",
+    "stage_10":     "13:40–13:44 — Dark Night of the Soul / Dunkle Nacht — PNS rebound peak (RMSSD maximum)",
+    "stages_11_12": "13:44–13:48 — Unity+Re-Integration / Einheit+Re-Integration"
+  },
+
+  "hrv_results": {
+    "note": "Computed by analysis/03_qualitative_model_report.py. Baseline RMSSD = 104.2 ms.",
+    "stage_1":      {"rmssd_ms": 114.7, "rmssd_delta": 10.5,  "sd2": 155.3, "sd1_sd2": 0.522, "dfa_a1": 0.873},
+    "stage_2":      {"rmssd_ms": 99.1,  "rmssd_delta": -5.1,  "sd2": 154.9, "sd1_sd2": 0.452, "dfa_a1": 0.833},
+    "stage_3":      {"rmssd_ms": 109.1, "rmssd_delta":  4.9,  "sd2": 166.6, "sd1_sd2": 0.463, "dfa_a1": 0.980},
+    "stage_4":      {"rmssd_ms": 94.9,  "rmssd_delta": -9.3,  "sd2": 140.2, "sd1_sd2": 0.479, "dfa_a1": 0.777},
+    "stage_5":      {"rmssd_ms": 101.1, "rmssd_delta": -3.1,  "sd2": 171.2, "sd1_sd2": 0.417, "dfa_a1": 0.969},
+    "stages_6_7":   {"rmssd_ms": 101.4, "rmssd_delta": -2.8,  "sd2": 151.9, "sd1_sd2": 0.472, "dfa_a1": 0.881},
+    "stages_8_9":   {"rmssd_ms": 99.2,  "rmssd_delta": -5.0,  "sd2": 224.3, "sd1_sd2": 0.313, "dfa_a1": 1.035},
+    "stage_10":     {"rmssd_ms": 117.6, "rmssd_delta": 13.4,  "sd2": 241.4, "sd1_sd2": 0.344, "dfa_a1": 1.236},
+    "stages_11_12": {"rmssd_ms": 103.6, "rmssd_delta": -0.6,  "sd2": 175.7, "sd1_sd2": 0.417, "dfa_a1": 1.038}
+  }
+}

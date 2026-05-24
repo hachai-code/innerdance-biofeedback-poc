@@ -32,7 +32,7 @@ import librosa.display
 
 PROJECT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
 AUDIO_FILE  = os.path.join(PROJECT_DIR, "sound", "whale delta.mp3")
-RR_FILE     = os.path.join(PROJECT_DIR, "data",  "14.12.25, 12_50 Vlad-1.csv")
+RR_FILE     = os.path.join(PROJECT_DIR, "data", "sample", "P1_2025-12-14_session01.csv")
 OUT_DIR     = os.path.join(PROJECT_DIR, "outputs", "figures")
 
 # Stage 1 window in the session (seconds from session start)

@@ -5,7 +5,10 @@ All research documentation, design artefacts, and iteration records.
 ## Start here
 
 - [RESEARCH_JOURNAL.md](../RESEARCH_JOURNAL.md) — consolidated research journal covering all iterations and current results. Read this first for context.
-- [architecture.md](architecture.md) — V1 implementation architecture (Supabase + Streamlit + Metabase) and conceptual architecture. Contains Mermaid diagrams and database schema.
+- [architecture.md](architecture.md) — V1 implementation architecture (Supabase + React + Metabase) and conceptual architecture. Contains Mermaid diagrams and database schema.
+- [architecture_decision_records.md](architecture_decision_records.md) — ADRs for platform selection (Supabase) and acoustic feature extraction package stack.
+- [data_collection_protocol.md](data_collection_protocol.md) — Single reference for what to record, when, in what format, and why. Use this for all future data collection rounds.
+- [analysis_skills.md](analysis_skills.md) — Compressed technical reference: HRV pipeline code, acoustic feature extraction code, key findings, and critical constraints. Start here when extending the analysis.
 
 ## Research iterations
 
